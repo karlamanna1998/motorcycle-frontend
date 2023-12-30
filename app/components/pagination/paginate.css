@@ -1,0 +1,32 @@
+.pagination_container{
+    background: #ffff;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* .buttons_container{ */
+    /* display: flex; */
+/* } */
+
+.buttons_container .paninate_button{
+    border: none;
+    background: none;
+    margin: 0 5px;
+}
+
+.buttons_container .paninate_button_number{
+    background-color: rgb(94, 94, 94);
+    color: #ffff;
+    width: 18px;
+    border: none;
+   margin: 2px;
+   height: 30px;
+   font-size: 13px;
+}
+
+.buttons_container .paninate_button_number.active{
+    background-color: black;
+   
+}
