@@ -1,0 +1,13 @@
+.title_bar{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.variants_container .btn-dark{
+        min-width: fit-content;
+}
+
+.filter_container select{
+    width: 180px;
+}

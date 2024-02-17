@@ -1,0 +1,124 @@
+.left_container{
+    /* height: 200px; */
+    /* border: 1px solid grey; */
+    background-color: #ffff;
+    margin-bottom: 15px;
+    padding: 10px;
+ }
+ 
+ .left_container .title{
+     color: hsl(220, 24%, 12%);
+     font-weight: 500;
+     font-size: 15px;
+     margin-bottom: 10px;
+  }
+ 
+ .left_container .input_box .input{
+     width: 100%;
+     height: 50px;
+     padding: 0 20px;
+     margin-bottom: 15px;
+     border: 1px solid hsla(220, 11%, 15%, 0.726);
+ }
+ 
+ .left_container .input_box{
+ position: relative;
+ }
+ 
+ .left_container .input_box .error_text{
+    position: absolute;
+    bottom: 1px;
+    color: red;
+    font-size: 10px;
+ }
+ 
+ .left_container .input_box .input:focus{
+     outline: none;
+ }
+ 
+ .right_container{
+     /* height: 500px; */
+     /* border: 1px solid grey; */
+     background-color: white;
+     padding: 10px;
+     min-height: 400px;
+ }
+ 
+ .title_bar{
+     background-color: #ffff;
+     margin-bottom: 15px;
+     padding: 15px;
+ }
+ 
+ .title_bar .title{
+     color: hsl(220, 24%, 12%);
+     font-weight: 500;
+     font-size: 20px;
+ }
+ 
+ .add_btn{
+     background: hsl(220, 24%, 12%);
+     color: #ffff;
+     border: none;
+     width: 100%;
+     font-size: 15px;
+     padding: 20px 0;
+ }
+ 
+ .cancel_btn{
+     background: #ffff;
+     color: hsl(220, 24%, 12%);
+     border: none;
+     border: 3px solid hsl(220, 24%, 12%);
+     margin-top: 5px;
+     width: 100%;
+     font-weight: 600;
+     font-size: 15px;
+     padding: 20px 0;
+ }
+ 
+ .add_btn:hover{
+     background: hsl(216, 5%, 20%);
+     
+ }
+ 
+ .left_container .input_box .form-control{
+   border-radius: 0;
+   height: 50px;
+   border: 1px solid hsla(220, 11%, 15%, 0.726)
+ }
+ 
+ .left_container .input_box .form-control::file-selector-button{
+    height: 50px;
+ }
+ 
+ .file_container .error_text{
+     bottom: -14px !important;
+ }
+ 
+ .logo_img{
+     width: 50px;
+ }
+ 
+ .delete_icon{
+     margin-left: 10px;
+     cursor: pointer;
+ }
+ 
+ .edit_icon{
+     /* margin-left: 10px; */
+     cursor: pointer;
+ }
+ 
+ .display_image_container{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ border: 3px solid  hsla(220, 11%, 15%, 0.726);
+ border-bottom: 0;
+ }
+ 
+ .display_image{
+     width: 80%;
+     height: auto;
+ }
