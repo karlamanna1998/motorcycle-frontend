@@ -23,6 +23,7 @@ export default function Motorcycles(){
     const [update, setUpdate] = useState(false)
     const [editID , setEditId] = useState("")
     const [formData , setFormData] = useState(initialFormState)
+    const [selectedBrand , setSelectedBrand] = useState("")
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
@@ -141,7 +142,7 @@ export default function Motorcycles(){
 
       const getAllMotorcycles = async (page: any) => {
         try {
-          let all_motorcycles = await axios.get(`http://localhost:5000/api/v1/admin/motorcycle/get-motorcycle?page=${page}&pageSize=${10}`)
+          let all_motorcycles = await axios.get(`http://localhost:5000/api/v1/admin/motorcycle/get-motorcycle?page=${page}&pageSize=${10}&brand=${selectedBrand}`)
           setallMotorcycles(all_motorcycles.data.data)
           setTotalDocs(all_motorcycles.data.total_docs)
           setCurrPage(page);
@@ -169,14 +170,29 @@ export default function Motorcycles(){
            setallBrands(allBrandss.data);
         }catch(err){
             console.log("Failed to get all Brand for dropdown");
-        }finally{
-            getAllMotorcycles(1)  
-        }   
+        }  
         })()
       },[])
+
+      useEffect(()=>{
+        getAllMotorcycles(1)
+      }, [selectedBrand])
 return (
     <div className="page_container">
-    <div className="title_bar"><span className="title">MOTORCYCLE's</span></div>
+    <div className="title_bar">
+      <span className="title">MOTORCYCLE's</span>
+      <div>
+      <select className="form-select" value={selectedBrand} onChange={(e)=>setSelectedBrand(e.target.value)}>
+                        <option value={""}>All Brand</option>
+                        {
+                            allBrands.length && allBrands.map((item: any, i) => (
+                                <option value={item._id} key={i}>{item.brand_name}</option>
+                            ))
+                        }
+      </select>
+      </div>
+   
+    </div>
     <div className="row">
       <div className="col-md-4 pe-md-0">
         <div className="left_container">
@@ -261,8 +277,12 @@ return (
                   )
                 })
               }
+             
             </tbody>
           </table>
+          {
+                allMotorcycles.length == 0 && <h4 className="text-center">NO DATA AVAILABLE</h4>
+              }
         </div>
         <Paginate totalDocsInPage={10} docLength={allMotorcycles.length} currPage={currPage} totalDocs={totalDocs} pageCHange={pageCHange} />
       </div>

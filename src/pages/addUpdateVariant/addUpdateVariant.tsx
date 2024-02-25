@@ -1,6 +1,8 @@
 import { useState ,useEffect } from "react";
 import { getAllBrandForDropdown, getAllMotorcyclesForDropdown } from "../../helper";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function AddUpdateVariant() {
     const [features, setFeatures]= useState<any>()
@@ -11,13 +13,17 @@ export default function AddUpdateVariant() {
     const [selectedMotorcycle, setselectedMotorcycle] = useState("")
     const [price, setPrice] = useState("");
     const [variantName , setVariantName]= useState("")
+    const navigate  = useNavigate()
+    const { id} = useParams()
 
     const brandChangeHandler = async(brand : string)=>{
         try{
             setselectedBrand(brand);
             let allmotorcycles = await getAllMotorcyclesForDropdown(brand)
             setallmotorcycles(allmotorcycles.data)
-            setselectedMotorcycle("")
+            if(!id){
+                setselectedMotorcycle("")
+            }
         }catch (err) {
            console.log(err);
         }
@@ -37,6 +43,30 @@ export default function AddUpdateVariant() {
           }
 
           await axios.post('http://localhost:5000/api/v1/admin/variants/add-variant', formdata)
+
+          navigate('/variants')
+        }catch(err){
+
+        }
+
+    }
+
+    const updateVariant = async(e :any)=>{
+        e.preventDefault()
+
+        try{
+          const formdata = {
+            variant_name : variantName,
+            brand : selectedBrand,
+            motorcycle : selectedMotorcycle,
+            price : price,
+            features : features ? features : {},
+            specifications : specification ? specification: {}
+          }
+
+          await axios.put(`http://localhost:5000/api/v1/admin/variants/update-variant/${id}`, formdata)
+
+          navigate('/variants')
         }catch(err){
 
         }
@@ -48,6 +78,18 @@ export default function AddUpdateVariant() {
             try {
                 let allBrandss = await getAllBrandForDropdown()
                 setallBrands(allBrandss.data);
+
+                if(id){
+                    const data = await axios.get(`http://localhost:5000/api/v1/admin/variants/get-variant/${id}`)
+                    brandChangeHandler(data.data.data.brand)
+                    setFeatures(data.data.data.features)
+                    setSpecification(data.data.data.specifications)
+                    setPrice(data.data.data.price)
+                    setVariantName(data.data.data.variant_name)
+                    setselectedBrand(data.data.data.brand)
+                    setselectedMotorcycle(data.data.data.motorcycle)
+                   
+                }
                 // let allmotorcycles = await getAllMotorcyclesForDropdown(selectedBrand)
                 // setallmotorcycles(allmotorcycles.data)
             } catch (err) {
@@ -57,14 +99,14 @@ export default function AddUpdateVariant() {
     },[])
     return (
         <div className="page_container ">
-            <div className="title_bar"><span className="title">ADD VARIANT</span>
+            <div className="title_bar"><ArrowBackIcon onClick={()=>navigate('/variants')}/><span className="title">ADD VARIANT</span>
             </div>
             <div className="right_container">
-                <form onSubmit={(e)=>saveVariant(e)}>
+                <form onSubmit={(e)=>{id ? updateVariant(e) :saveVariant(e)}}>
                     <div className="row mb-3">
                         <div className="col-md-6  col-lg-3 mb-2">
                             <label htmlFor="brand" className="form-label">Brand</label>
-                            <select className="form-select form-select-lg" value={selectedBrand} onChange={(e) => brandChangeHandler(e.target.value)} required>
+                            <select className="form-select form-select-lg" value={selectedBrand} onChange={(e) => brandChangeHandler(e.target.value)} required disabled={id ? true : false}>
                             <option value={""}>Select Brand</option>
                             {
                                 allBrands.length && allBrands.map((item: any, i) => (
@@ -76,7 +118,7 @@ export default function AddUpdateVariant() {
 
                         <div className="col-md-6  col-lg-3 mb-2">
                         <label  className="form-label">Motorcycle</label>
-                        <select className="form-select form-select-lg" value={selectedMotorcycle} onChange={(e) => setselectedMotorcycle(e.target.value)} required={true}>
+                        <select className="form-select form-select-lg" value={selectedMotorcycle} onChange={(e) => setselectedMotorcycle(e.target.value)} required={true} disabled={id ? true : false}>
                             <option value={""}>Select Motorcycle</option>
                             {
                                 allmotorcycles.length && allmotorcycles.map((item: any, i) => (
@@ -1040,7 +1082,7 @@ export default function AddUpdateVariant() {
                     </div>
 
                     <div className="d-flex justify-content-end">
-                    <button  className="btn btn-dark" type="submit">SAVE</button>
+                    {id ? <button  className="btn btn-dark" type="submit">UPDATE</button> : <button  className="btn btn-dark" type="submit">SAVE</button>}
                     </div>
 
                 </form>
