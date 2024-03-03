@@ -1,11 +1,13 @@
-import { Link , useNavigate } from "react-router-dom"
+import { Link , useNavigate , useLocation, NavLink } from "react-router-dom"
 import "./navbar.css"
 import Swal from 'sweetalert2';
 
 export default function Navbar(){
 
     const navigate = useNavigate()
-
+    const location = useLocation()
+    console.log(location);
+    
     const handleLogout = (data: any) => {
         // Handle form submission logic
         Swal.fire({
@@ -27,12 +29,17 @@ export default function Navbar(){
     return (
         <nav>
             <ul>
-                <li><Link to={'/brands'}>BRANDS</Link></li>
-                <li><Link to={'/motorcycles'}>MOTORCYCLES</Link></li>
-                <li><Link to={'/variants'}>VARIANTS</Link></li>
-                <li><Link to={'/images-upload'}>UPLOAD IMAGES</Link></li>
+            <li><Link to={'/brands'}><img src="./logo.png"/></Link></li>
+                {location.pathname != '/login' && 
+                <>
+                <li><NavLink className={({isActive, isPending})=>{ return isActive ? "active_link"  : "inactive_link";}}  to={'/brands'}>BRANDS</NavLink></li>
+                <li><NavLink className={({isActive, isPending})=>{ return isActive ? "active_link"  : "inactive_link";}} to={'/motorcycles'}>MOTORCYCLES</NavLink></li>
+                <li><NavLink className={({isActive, isPending})=>{ return isActive ? "active_link"  : "inactive_link";}} to={'/variants'}>VARIANTS</NavLink></li>
+                <li><NavLink className={({isActive, isPending})=>{ return isActive ? "active_link"  : "inactive_link";}} to={'/images-upload'}>UPLOAD IMAGES</NavLink></li>
+                </>
+                }
             </ul>
-            <button type="button" className="btn btn-outline-light" onClick={handleLogout}>LOGOUT</button>
+            {location.pathname != '/login' &&  <button type="button" className="btn btn-outline-light" onClick={handleLogout}>LOGOUT</button>}
         </nav>
     )
 }

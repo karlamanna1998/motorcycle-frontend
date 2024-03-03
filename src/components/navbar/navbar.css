@@ -18,14 +18,30 @@ nav ul{
 nav ul li{
     margin-right: 20px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
-nav ul li a{
+nav ul li img{
+   height: 50px;
+}
+
+nav ul li .inactive_link{
     text-decoration: none;
     color: #ffff;
+    font-size: 13px;
+}
+
+nav ul li .active_link{
+    text-decoration: none;
+    color: #ffff;
+    font-weight: 700;
+    font-size: 16px;
+    /* text-decoration: underline; */
+    border-bottom: 3px solid #ffff;
 }
 
 nav ul li:hover{
-    font-weight: 500;
+    font-weight: 700;
     transition:  ease;
 }

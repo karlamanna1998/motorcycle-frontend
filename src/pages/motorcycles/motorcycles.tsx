@@ -78,7 +78,7 @@ export default function Motorcycles(){
             formdata.append("brand", formData.brand);
             formdata.append("status", formData.status);
             formdata.append("type", formData.type);
-            const response = await axios.post('http://localhost:5000/api/v1/admin/motorcycle/add-motorcycle', formdata, {
+            const response = await axios.post(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/motorcycle/add-motorcycle`, formdata, {
               headers: {
                 'Content-Type': 'multipart/form-data', // Important for file uploads
               },
@@ -103,7 +103,7 @@ export default function Motorcycles(){
             formdata.append("brand", formData.brand);
             formdata.append("status", formData.status);
             formdata.append("type", formData.type);
-            const response = await axios.put(`http://localhost:5000/api/v1/admin/motorcycle/update-motorcycle/${editID}`, formdata, {
+            const response = await axios.put(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/motorcycle/update-motorcycle/${editID}`, formdata, {
               headers: {
                 'Content-Type': 'multipart/form-data', // Important for file uploads
               },
@@ -150,7 +150,7 @@ export default function Motorcycles(){
       const getAllMotorcycles = async (page: any) => {
         dispatch(setLoader(true))
         try {
-          let all_motorcycles = await axios.get(`http://localhost:5000/api/v1/admin/motorcycle/get-motorcycle?page=${page}&pageSize=${10}&brand=${selectedBrand}`)
+          let all_motorcycles = await axios.get(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/motorcycle/get-motorcycle?page=${page}&pageSize=${10}&brand=${selectedBrand}`)
           setallMotorcycles(all_motorcycles.data.data)
           setTotalDocs(all_motorcycles.data.total_docs)
           setCurrPage(page);

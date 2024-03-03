@@ -9,7 +9,8 @@ import axios from "axios";
 
 interface fetchedImage {
   images: Array<string> | [],
-  _id: string
+  _id: string,
+  motorcycle : string
 }
 
 
@@ -22,7 +23,8 @@ export default function UploadImages() {
   const [selectedMotorcycle, setselectedMotorcycle] = useState("")
   const [fetchedImageData, setfetchedImageData] = useState<fetchedImage>({
     images: [],
-    _id: ""
+    _id: "",
+    motorcycle : ""
   })
   const [viewImage, setViewImage] = useState(false)
   const imageBaseUrl = process.env.REACT_APP_NEXT_PUBLIC_MEDIA_BASE_URL || ""
@@ -99,7 +101,7 @@ export default function UploadImages() {
     });
 
     try {
-     const data =  await axios.post("http://localhost:5000/api/v1/admin/images/upload", formData, {
+     const data =  await axios.post(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/images/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -118,14 +120,15 @@ export default function UploadImages() {
   async function getImages() {
     dispatch(setLoader(true))
     try {
-      const data = await axios.get(`http://localhost:5000/api/v1/admin/images/list?brand=${selectedBrand}&motorcycle=${selectedMotorcycle}`)
+      const data = await axios.get(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/images/list?brand=${selectedBrand}&motorcycle=${selectedMotorcycle}`)
       const result = data.data
       
       if (result.data.length > 0 && result.data[0]?.images?.length > 0) {
         setfetchedImageData(
           {
             images: result.data[0]?.images,
-            _id: result.data[0]?._id
+            _id: result.data[0]?._id,
+            motorcycle : result.data[0]?.motorcycle
           }
         )
         setViewImage(true)
@@ -134,7 +137,8 @@ export default function UploadImages() {
         setfetchedImageData(
           {
             images: [],
-            _id: ""
+            _id: "",
+            motorcycle : ""
           }
         )
         dispatch(setLoader(false))
@@ -166,7 +170,7 @@ export default function UploadImages() {
           imageUrl: url
         }
         try {
-          const data = await axios.post(`http://localhost:5000/api/v1/admin/images/delete/${id}` , formData);
+          const data = await axios.post(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/images/delete/${id}` , formData);
           toast.success(data.data.message); 
           getImages()
            
@@ -252,7 +256,10 @@ export default function UploadImages() {
 
       {
         viewImage && <div className="right_container">
+          <div className="d-flex align-items-center justify-content-between mb-4 ">
           <button className="btn btn-dark" onClick={() => setViewImage(false)}>Back</button>
+          <span className="motorcycle_title">{fetchedImageData.motorcycle} Images..</span>
+          </div>
 
           <div className="viewImages_container">
             {fetchedImageData.images.map((imageData) => {

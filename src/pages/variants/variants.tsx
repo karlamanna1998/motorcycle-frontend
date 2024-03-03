@@ -20,7 +20,7 @@ export default function Variants() {
     const getAllVAriants = async (brand: string, motorcycle: string, page: number) => {
         dispatch(setLoader(true))
         try {
-            const variants = await axios.get(`http://localhost:5000/api/v1/admin/variants/variant-list?page=${page}&pageSize=10&motorcycleId=${motorcycle}&brandId=${brand}`);
+            const variants = await axios.get(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/variants/variant-list?page=${page}&pageSize=10&motorcycleId=${motorcycle}&brandId=${brand}`);
             setVariants(variants.data.data)
             setTotalDocs(variants.data.total_docs)
             setCurrPage(page);
@@ -75,7 +75,7 @@ export default function Variants() {
     const deleteVariant = async (variantId: string) => {
         dispatch(setLoader(true))
         try {
-            await axios.delete(`http://localhost:5000/api/v1/admin/variants/variant-delete/${variantId}`)
+            await axios.delete(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/variants/variant-delete/${variantId}`)
             await getAllVAriants(selectedBrand, selectedMotorcycle, 1)
         } catch (err) {
             console.log(err);

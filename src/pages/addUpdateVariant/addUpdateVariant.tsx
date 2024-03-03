@@ -45,7 +45,7 @@ export default function AddUpdateVariant() {
             specifications : specification
           }
 
-          await axios.post('http://localhost:5000/api/v1/admin/variants/add-variant', formdata)
+          await axios.post(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/variants/add-variant`, formdata)
 
           navigate('/variants')
         }catch(err){
@@ -67,7 +67,7 @@ export default function AddUpdateVariant() {
             specifications : specification ? specification: {}
           }
 
-          await axios.put(`http://localhost:5000/api/v1/admin/variants/update-variant/${id}`, formdata)
+          await axios.put(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/variants/update-variant/${id}`, formdata)
 
           navigate('/variants')
         }catch(err){
@@ -84,7 +84,7 @@ export default function AddUpdateVariant() {
                 setallBrands(allBrandss.data);
 
                 if(id){
-                    const data = await axios.get(`http://localhost:5000/api/v1/admin/variants/get-variant/${id}`)
+                    const data = await axios.get(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/variants/get-variant/${id}`)
                     brandChangeHandler(data.data.data.brand)
                     setFeatures(data.data.data.features)
                     setSpecification(data.data.data.specifications)

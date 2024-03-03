@@ -12,7 +12,7 @@ export default function Login(){
     const login = async (e : any) => {
         e.preventDefault()
         try {
-            let user = await axios.post('http://localhost:5000/api/v1/admin/login', { username, password })
+            let user = await axios.post(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/login`, { username, password })
             localStorage.setItem('user', user.data.data.token)
             navigate('/motorcycles')
         } catch (err: any) {

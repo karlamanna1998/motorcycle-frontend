@@ -87,7 +87,7 @@ export default function Brand() {
         let formData = new FormData();
         formData.append("brand_name", brandname);
         formData.append("file", image);
-        const response = await axios.post('http://localhost:5000/api/v1/admin/brand/add-brand', formData, {
+        const response = await axios.post('${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/brand/add-brand', formData, {
           headers: {
             'Content-Type': 'multipart/form-data', // Important for file uploads
           },
@@ -113,7 +113,7 @@ export default function Brand() {
       if (image != null) {
         formData.append("file", image);
       }
-      const response = await axios.put(`http://localhost:5000/api/v1/admin/brand/update-brand/${editID}`, formData, {
+      const response = await axios.put(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/brand/update-brand/${editID}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Important for file uploads
         },
@@ -138,7 +138,7 @@ export default function Brand() {
   const deleteBrand = async (data: any) => {
     dispatch(setLoader(true))
     try {
-      const response = await axios.delete(`http://localhost:5000/api/v1/admin/brand/delete-brand/${data._id}`);
+      const response = await axios.delete(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/brand/delete-brand/${data._id}`);
       toast.success(response.data.message);
       dispatch(setLoader(false))
       getAllBrands(currPage)
@@ -154,7 +154,7 @@ export default function Brand() {
     console.log(currPage);
 
     try {
-      let all_brands = await axios.get(`http://localhost:5000/api/v1/admin/brand/get-brand?page=${page}&pageSize=${10}`)
+      let all_brands = await axios.get(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/brand/get-brand?page=${page}&pageSize=${10}`)
       dispatch(setLoader(false))
       setAllBrands(all_brands.data.data)
       setTotalDocs(all_brands.data.total_docs)
@@ -251,7 +251,7 @@ export default function Brand() {
                         <td>{brand.brand_name}</td>
                         <td>
                           <img className="edit_icon" src="./edit.svg" onClick={() => handleEdit(brand)} />
-                          <img className="delete_icon" src="./delete.svg" onClick={() => handleDelete(brand)} />
+                          {/* <img className="delete_icon" src="./delete.svg" onClick={() => handleDelete(brand)} /> */}
                         </td>
                       </tr>
                     )
