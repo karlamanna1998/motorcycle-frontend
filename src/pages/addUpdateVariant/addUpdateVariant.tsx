@@ -3,7 +3,8 @@ import { getAllBrandForDropdown, getAllMotorcyclesForDropdown } from "../../help
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import { setLoader } from "../../slices/loader";
+import { useAppDispatch } from "../../hooks";
 export default function AddUpdateVariant() {
     const [features, setFeatures]= useState<any>()
     const [specification , setSpecification] = useState<any>()
@@ -15,6 +16,8 @@ export default function AddUpdateVariant() {
     const [variantName , setVariantName]= useState("")
     const navigate  = useNavigate()
     const { id} = useParams()
+    const dispatch = useAppDispatch()
+
 
     const brandChangeHandler = async(brand : string)=>{
         try{
@@ -75,6 +78,7 @@ export default function AddUpdateVariant() {
 
     useEffect(() => {
         (async () => {
+            dispatch(setLoader(true))
             try {
                 let allBrandss = await getAllBrandForDropdown()
                 setallBrands(allBrandss.data);
@@ -88,12 +92,16 @@ export default function AddUpdateVariant() {
                     setVariantName(data.data.data.variant_name)
                     setselectedBrand(data.data.data.brand)
                     setselectedMotorcycle(data.data.data.motorcycle)
-                   
+                    dispatch(setLoader(false))
+                }else{
+                    dispatch(setLoader(false))
                 }
+              
                 // let allmotorcycles = await getAllMotorcyclesForDropdown(selectedBrand)
                 // setallmotorcycles(allmotorcycles.data)
             } catch (err) {
                 console.log("Failed to get all Brand for dropdown");
+                dispatch(setLoader(false))
             }
         })()
     },[])

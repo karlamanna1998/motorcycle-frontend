@@ -5,6 +5,8 @@ import axios from "axios";
 import { getAllBrandForDropdown } from "../../helper";
 import './motorcycles.css'
 import Paginate from "../../components/paginate/paginate";
+import { setLoader } from "../../slices/loader";
+import { useAppDispatch } from "../../hooks";
 const initialFormState = {
     motorcycle_name : "",
     brand : "",
@@ -24,7 +26,7 @@ export default function Motorcycles(){
     const [editID , setEditId] = useState("")
     const [formData , setFormData] = useState(initialFormState)
     const [selectedBrand , setSelectedBrand] = useState("")
-
+    const dispatch = useAppDispatch()
     const handleSubmit = (e: any) => {
         e.preventDefault()
         if (update) {
@@ -67,6 +69,7 @@ export default function Motorcycles(){
     };
 
     const addMotorcycle = async () => {
+      dispatch(setLoader(true))
         try {
           if(formData.display_image != null){
             let formdata = new FormData();
@@ -86,11 +89,13 @@ export default function Motorcycles(){
             getAllMotorcycles(currPage)
           }
         } catch (err: any) {
+          dispatch(setLoader(false))
           toast.error(err.message);
         }
       }
 
       const updateMotorcycle = async () => {
+        dispatch(setLoader(true))
         try {
             let formdata = new FormData();
             if(formData.display_image != null){  formdata.append("display_image", formData.display_image);}
@@ -107,8 +112,10 @@ export default function Motorcycles(){
             setImageName("")
             setEditImage("")
             toast.success(response.data.message);
+            setUpdate(false)
             getAllMotorcycles(currPage)
         } catch (err: any) {
+          dispatch(setLoader(false))
           toast.error(err.message);
         }
       }
@@ -141,12 +148,15 @@ export default function Motorcycles(){
       }
 
       const getAllMotorcycles = async (page: any) => {
+        dispatch(setLoader(true))
         try {
           let all_motorcycles = await axios.get(`http://localhost:5000/api/v1/admin/motorcycle/get-motorcycle?page=${page}&pageSize=${10}&brand=${selectedBrand}`)
           setallMotorcycles(all_motorcycles.data.data)
           setTotalDocs(all_motorcycles.data.total_docs)
           setCurrPage(page);
+          dispatch(setLoader(false))
         } catch (err: any) {
+          dispatch(setLoader(false))
           toast.error(err.message);
         }
       }
@@ -165,6 +175,7 @@ export default function Motorcycles(){
 
       useEffect(()=>{
         (async ()=>{
+         
         try{
            let allBrandss = await getAllBrandForDropdown()
            setallBrands(allBrandss.data);

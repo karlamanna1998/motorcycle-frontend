@@ -30,6 +30,7 @@ export default function Navbar(){
                 <li><Link to={'/brands'}>BRANDS</Link></li>
                 <li><Link to={'/motorcycles'}>MOTORCYCLES</Link></li>
                 <li><Link to={'/variants'}>VARIANTS</Link></li>
+                <li><Link to={'/images-upload'}>UPLOAD IMAGES</Link></li>
             </ul>
             <button type="button" className="btn btn-outline-light" onClick={handleLogout}>LOGOUT</button>
         </nav>

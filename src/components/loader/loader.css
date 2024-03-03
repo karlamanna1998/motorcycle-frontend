@@ -1,5 +1,5 @@
 .loader_wrapper{
-    position: absolute;
+    position: fixed;
     height: 100vh;
     top: 0;
     /* background: #ffffffdc; */

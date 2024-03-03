@@ -12,6 +12,7 @@ import Navbar from './components/navbar/navbar';
 import Loader from './components/loader/loader';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { setLoader } from "./slices/loader";
+import UploadImages from './pages/uploadIMages/UploadImages';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
       <Route  path ={'/variants'} element={<Variants/>}/>
       <Route  path ={'/add-variant'} element={<AddUpdateVariant/>}/>
       <Route  path ={'/add-variant/:id'} element={<AddUpdateVariant/>}/>
+      <Route  path ={'/images-upload'} element={<UploadImages/>}/>
       </Route>
       <Route  path ={'/login'} element={<Login/>}/>
       <Route path='*' element={<PageNotFound/>}/>
