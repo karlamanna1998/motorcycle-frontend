@@ -35,6 +35,7 @@ function App() {
       <Route  path ={'/images-upload'} element={<UploadImages/>}/>
       </Route>
       <Route  path ={'/login'} element={<Login/>}/>
+      <Route  path ={'/'} element={<Login/>}/>
       <Route path='*' element={<PageNotFound/>}/>
     </Routes>
     {loader && <Loader/>}
