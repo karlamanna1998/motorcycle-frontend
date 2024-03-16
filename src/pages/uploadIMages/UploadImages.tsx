@@ -6,6 +6,7 @@ import { setLoader } from "../../slices/loader";
 import Swal from 'sweetalert2';
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import ImageComponent from "../../components/imageComponent/imageComponent";
 
 interface fetchedImage {
   images: Array<string> | [],
@@ -266,7 +267,7 @@ export default function UploadImages() {
               return (
 
                 <div className="view_image_card">
-                  <img src={imageBaseUrl + imageData} />
+                  <ImageComponent src={imageBaseUrl + imageData} width={200} height={200}/>
                   <button className="btn btn-dark" onClick={()=>deleteImage(fetchedImageData._id , imageData)}>Delete</button>
                 </div>
               )

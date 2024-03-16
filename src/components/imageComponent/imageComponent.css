@@ -1,0 +1,15 @@
+.imagePlaceholder{
+    height: 200px;
+    background: rgb(242, 242, 242);
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+   font-weight: 600;
+   font-size: 18px;
+}
+
+.image{
+    transition: 2s ease;
+}
