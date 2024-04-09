@@ -184,4 +184,12 @@ height: auto;
     .file-upload{
       padding: 10px 0;
     }
+
+    .filter_container select{
+      width: 100%;
+    }
+
+    .uploadImage_container .motorcycle_title{
+      font-size: 19px;
+    }
   }
