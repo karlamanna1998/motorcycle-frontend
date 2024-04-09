@@ -175,6 +175,7 @@ border-bottom: 0;
  @media (max-width : 768px) {
       .right_container .table{
          width: max-content;
+         min-width: 100%;
       }
  }
 
