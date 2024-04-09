@@ -60,7 +60,7 @@ nav ul li:hover {
     background: #171c26;
     height: 0;
     visibility: hidden;
-    transition: height 0.5s ease;
+    transition: height 0.2s ease;
 }
 
 .mobile_menu.active{
