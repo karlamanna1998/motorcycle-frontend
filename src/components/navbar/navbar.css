@@ -33,6 +33,7 @@ nav .ham_image {
 
 nav .nav_wrapper {
     display: flex;
+    gap: 10px;
 }
 
 nav ul li .inactive_link {
@@ -58,12 +59,14 @@ nav ul li:hover {
 .mobile_menu {
     background: #171c26;
     height: 0;
+    visibility: hidden;
     transition: height 0.5s ease;
 }
 
 .mobile_menu.active{
     transition: height 1s ease;
     height: 220px;
+    visibility: visible;
 }
 
 .mobile_menu ul {
