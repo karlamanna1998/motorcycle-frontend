@@ -179,3 +179,9 @@ height: auto;
     font-weight: 600;
     font-size: 23px;
   }
+
+  @media (max-width: 576px) {
+    .file-upload{
+      padding: 10px 0;
+    }
+  }
