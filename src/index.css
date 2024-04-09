@@ -81,6 +81,7 @@ position: relative;
    background-color: white;
    padding: 10px;
    min-height: 400px;
+   overflow: auto;
 }
 
 .title_bar{
@@ -169,5 +170,11 @@ border-bottom: 0;
 
  .title_bar svg{
    cursor: pointer;
+ }
+
+ @media (max-width : 768px) {
+      .right_container .table{
+         width: max-content;
+      }
  }
 

@@ -1,4 +1,4 @@
-nav{
+nav {
     background: #171c26;
     color: #ffff;
     height: 75px;
@@ -9,30 +9,39 @@ nav{
     justify-content: space-between;
 }
 
-nav ul{
+nav ul {
     display: flex;
     list-style: none;
     margin-bottom: 0;
     padding-left: 0;
 }
-nav ul li{
+
+nav ul li {
     margin-right: 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
 }
 
-nav ul li img{
-   height: 50px;
+nav .logo {
+    height: 50px;
 }
 
-nav ul li .inactive_link{
+nav .ham_image {
+    height: 30px;
+}
+
+nav .nav_wrapper {
+    display: flex;
+}
+
+nav ul li .inactive_link {
     text-decoration: none;
     color: #ffff;
     font-size: 13px;
 }
 
-nav ul li .active_link{
+nav ul li .active_link {
     text-decoration: none;
     color: #ffff;
     font-weight: 700;
@@ -41,7 +50,60 @@ nav ul li .active_link{
     border-bottom: 3px solid #ffff;
 }
 
-nav ul li:hover{
+nav ul li:hover {
     font-weight: 700;
-    transition:  ease;
+    transition: ease;
+}
+
+.mobile_menu {
+    background: #171c26;
+    height: 0;
+    transition: height 0.5s ease;
+}
+
+.mobile_menu.active{
+    transition: height 1s ease;
+    height: 220px;
+}
+
+.mobile_menu ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.mobile_menu ul li {
+    padding: 5px 20px;
+}
+
+.mobile_menu ul li:first-child{
+    padding-top: 15px;
+}
+
+.mobile_menu ul li a {
+    text-decoration: none;
+    color: #ffff;
+}
+
+.mobile_menu .logout_btn{
+    margin-left: 20px;
+}
+
+@media (max-width : 776px) {
+    nav .nav_wrapper ul {
+        display: none;
+    }
+
+    nav .logout_btn {
+        display: none;
+    }
+}
+
+@media (min-width : 776px) {
+    .mobile_menu.active{
+        height: 0px;
+    }
+
+    nav .ham_image {
+        display: none;
+    }
 }

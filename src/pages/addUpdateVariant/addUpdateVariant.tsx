@@ -532,7 +532,7 @@ export default function AddUpdateVariant() {
                     <div className="row mb-3">
                         <div className="col-md-6  col-lg-3 mb-2">
                                 <label htmlFor="displacement" className="form-label">Displacement</label>
-                                <input type="text" className="form-control form-control-lg" id="displacement" aria-describedby="emailHelp" placeholder="Aditional Features" value={specification?.displacement ? specification?.displacement : ""} onChange={(e) => setSpecification({ ...specification, additionalFeatures: e.target.value })}/>
+                                <input type="text" className="form-control form-control-lg" id="displacement" aria-describedby="emailHelp" placeholder="Displacement" value={specification?.displacement ? specification?.displacement : ""} onChange={(e) => setSpecification({ ...specification, displacement : e.target.value })}/>
                         </div>
                         <div className="col-md-6 col-lg-3 mb-2">
                             <label htmlFor="maxPower" className="form-label">Max Power</label>

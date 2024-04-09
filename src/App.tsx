@@ -33,9 +33,10 @@ function App() {
       <Route  path ={'/add-variant'} element={<AddUpdateVariant/>}/>
       <Route  path ={'/add-variant/:id'} element={<AddUpdateVariant/>}/>
       <Route  path ={'/images-upload'} element={<UploadImages/>}/>
+      <Route  path ={'/'} element={<Motorcycles/>}/>
       </Route>
       <Route  path ={'/login'} element={<Login/>}/>
-      <Route  path ={'/'} element={<Login/>}/>
+      
       <Route path='*' element={<PageNotFound/>}/>
     </Routes>
     {loader && <Loader/>}
