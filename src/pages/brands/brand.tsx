@@ -17,6 +17,7 @@ export default function Brand() {
   const [update, setUpdate] = useState(false)
   const [editID, setEditId] = useState("")
   const [brandname, setBrandName] = useState("")
+  const [slug , setSlug] = useState('')
 
   const dispatch = useAppDispatch()
 
@@ -86,12 +87,14 @@ export default function Brand() {
       if (image != null) {
         let formData = new FormData();
         formData.append("brand_name", brandname);
+        formData.append("slug", slug);
         formData.append("file", image);
         const response = await axios.post('${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/brand/add-brand', formData, {
           headers: {
             'Content-Type': 'multipart/form-data', // Important for file uploads
           },
         });
+        setSlug('')
         setBrandName("")
         setImage(null)
         setImageName("")
@@ -110,6 +113,7 @@ export default function Brand() {
 
       let formData = new FormData();
       formData.append("brand_name", brandname);
+      formData.append("slug", slug);
       if (image != null) {
         formData.append("file", image);
       }
@@ -118,6 +122,7 @@ export default function Brand() {
           'Content-Type': 'multipart/form-data', // Important for file uploads
         },
       });
+      setSlug('')
       setUpdate(false);
       setBrandName("")
       setEditId("")
@@ -171,6 +176,7 @@ export default function Brand() {
 
   const handleEdit = async (brandData: any) => {
     setEditId(brandData._id);
+    setSlug(brandData.slug)
     setBrandName(brandData.brand_name)
     setUpdate(true)
     setImage(null)
@@ -179,6 +185,7 @@ export default function Brand() {
 
   const handleCancelEdit = () => {
     setBrandName("")
+    setSlug('')
     setEditId("")
     setImage(null);
     setEditImage("")
@@ -206,6 +213,11 @@ export default function Brand() {
               <div className="input_box">
                 <input type="text" id="name" className="input" name="brand_name" placeholder="Brand Name" onChange={(e) => setBrandName(e.target.value)}
                   value={brandname} required />
+                {/* {formik.touched.brand_name && formik.errors.brand_name && <div className="error_text">{formik.errors.brand_name}</div>} */}
+              </div>
+              <div className="input_box">
+                <input type="text" id="name" className="input" name="slug" placeholder="Enter Slug" onChange={(e) => setSlug(e.target.value)}
+                  value={slug} required />
                 {/* {formik.touched.brand_name && formik.errors.brand_name && <div className="error_text">{formik.errors.brand_name}</div>} */}
               </div>
               <div className="input_box file_container">
@@ -238,6 +250,7 @@ export default function Brand() {
                   <th scope="col">SL.NO</th>
                   <th scope="col">Logo</th>
                   <th scope="col">Brand Name</th>
+                  <th scope="col">Slug</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -249,9 +262,9 @@ export default function Brand() {
                         <th scope="row">{(10 * currPage + 1) - 10 + i}</th>
                         <td><img className="logo_img" src={process.env.REACT_APP_NEXT_PUBLIC_MEDIA_BASE_URL + brand.logo_url} /></td>
                         <td>{brand.brand_name}</td>
+                        <td>{brand.slug}</td>
                         <td>
                           <img className="edit_icon" src="./edit.svg" onClick={() => handleEdit(brand)} />
-                          {/* <img className="delete_icon" src="./delete.svg" onClick={() => handleDelete(brand)} /> */}
                         </td>
                       </tr>
                     )
