@@ -11,7 +11,9 @@ const initialFormState = {
     motorcycle_name : "",
     brand : "",
     display_image : null,
-    status : "",
+    status : false,
+    slug  : "",
+    popular : false,
     type : ""
 }
 
@@ -76,8 +78,10 @@ export default function Motorcycles(){
             formdata.append("motorcycle_name", formData.motorcycle_name);
             formdata.append("display_image", formData.display_image);
             formdata.append("brand", formData.brand);
-            formdata.append("status", formData.status);
+            formdata.append("status", formData.status ? 'active' : 'inactive');
             formdata.append("type", formData.type);
+            formdata.append("slug", formData.slug);
+            formdata.append("popular", formData.popular ? 'true' : 'false');
             const response = await axios.post(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/motorcycle/add-motorcycle`, formdata, {
               headers: {
                 'Content-Type': 'multipart/form-data', // Important for file uploads
@@ -101,8 +105,10 @@ export default function Motorcycles(){
             if(formData.display_image != null){  formdata.append("display_image", formData.display_image);}
             formdata.append("motorcycle_name", formData.motorcycle_name);
             formdata.append("brand", formData.brand);
-            formdata.append("status", formData.status);
+            formdata.append("status",  formData.status ? 'active' : 'inactive');
             formdata.append("type", formData.type);
+            formdata.append("slug", formData.slug);
+            formdata.append("popular", formData.popular ? 'true' : 'false');
             const response = await axios.put(`${process.env.REACT_APP_NEXT_PUBLIC_API_BASE_URL}api/v1/admin/motorcycle/update-motorcycle/${editID}`, formdata, {
               headers: {
                 'Content-Type': 'multipart/form-data', // Important for file uploads
@@ -127,8 +133,10 @@ export default function Motorcycles(){
           brand: motorCycleData.brand,
           display_image : null,
           motorcycle_name : motorCycleData.motorcycle_name,
-          status : motorCycleData.status,
-          type : motorCycleData.type
+          status : motorCycleData.status === 'active' ? true : false,
+          type : motorCycleData.type,
+          slug : motorCycleData.slug,
+          popular : motorCycleData.popular
         })
         setEditId(motorCycleData._id);
         setUpdate(true)
@@ -215,6 +223,10 @@ return (
                 value={formData.motorcycle_name}  required/>
             </div>
             <div className="input_box">
+              <input type="text" id="name" className="input" name="slug" placeholder="Slug" onChange={(e)=> setFormData((prev)=>({...prev , slug : e.target.value}))}
+                value={formData.slug}  required/>
+            </div>
+            <div className="input_box">
               <select onChange={(e)=> setFormData((prev)=>({...prev , brand : e.target.value}))} value={formData.brand} required>
                   <option value={""}>Select Brand</option>
                   {
@@ -224,13 +236,7 @@ return (
                   }
               </select>
             </div>
-            <div className="input_box">
-              <select onChange={(e)=> setFormData((prev)=>({...prev , status : e.target.value}))} value={formData.status} required>
-                  <option value={""}>Select Status</option>
-                  <option value={"active"}>Active</option>
-                  <option value={"inactive"}>InActive</option>
-              </select>
-            </div>
+           
             <div className="input_box">
               <select onChange={(e)=> setFormData((prev)=>({...prev , type : e.target.value}))} value={formData.type} required>
                   <option value={""}>Select Type</option>
@@ -244,6 +250,17 @@ return (
                 setImageName(e.target.value)
               }} />
             </div>
+            <label className="toggle">
+              <span className="toggle-label">Status</span>
+              <input className="toggle-checkbox" type="checkbox" checked={formData.status} onChange={(e) => setFormData((prev) => ({ ...prev, status: !formData.status }))} />
+              <div className="toggle-switch"></div>
+            </label>
+
+            <label className="toggle">
+              <span className="toggle-label">Popular</span>
+              <input className="toggle-checkbox" type="checkbox" checked={formData.popular} onChange={(e) => setFormData((prev) => ({ ...prev, popular: !formData.popular }))} />
+              <div className="toggle-switch"></div>
+            </label>
             {
               formData.display_image ? <div className="display_image_container"><img className="display_image" src={URL.createObjectURL(formData.display_image)}/></div>
               : editImage ? <div className="display_image_container"><img className="display_image" src={process.env.REACT_APP_NEXT_PUBLIC_MEDIA_BASE_URL + editImage}/></div>
